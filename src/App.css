@@ -1,0 +1,22 @@
+/* Default light theme styles */
+.app {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .navbar {
+    background-color: #f8f8f8;
+    color: #000;
+  }
+  
+  /* Dark theme styles */
+  .app.dark {
+    background-color: #333333;
+    color: #ffffff;
+  }
+  
+  .navbar.dark {
+    background-color: #444444;
+  }
+  

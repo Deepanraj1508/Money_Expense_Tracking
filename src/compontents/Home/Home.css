@@ -34,8 +34,18 @@ h3 {
 }
 
 /* Input fields and select dropdowns */
-input, select {
+input{
     width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #ffffff;
+}
+
+select {
+    width: 105%;
     padding: 8px;
     margin: 5px 0;
     border: 1px solid #ccc;
@@ -97,3 +107,5 @@ button:hover {
         margin-bottom: 20px;
     }
 }
+
+

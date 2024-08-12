@@ -20,16 +20,22 @@ const Home = () => {
         const subCategories = {
             housing: [
                 { value: 'rent', label: 'Home Rent' },
-                { value: 'mortgage', label: 'Mortgage Payments' },
-                { value: 'property_taxes', label: 'Property Taxes' },
-                { value: 'insurance', label: 'Homeowners/Renters Insurance' },
-                { value: 'utilities', label: 'Utilities' },
+                { value: 'electricity', label: 'Electricity' },
+                { value: 'gas', label: 'Gas' },
+                { value: 'water', label: 'Water' },
                 { value: 'internet_cable', label: 'Internet and Cable/Streaming Services' }
             ],
+            emi:[
+                { value: 'bike', label: 'Bike' },
+                { value: 'car', label: 'Car' },
+                { value: 'mobile', label: 'Mobile' },
+                { value: 'homeloan', label: 'Home loans' },
+                { value: 'credit_card_payments', label: 'Credit Card Payments' },
+                { value: 'student_loans', label: 'Student Loan Payments' },
+                { value: 'other_loans', label: 'Other Loan Payments' }
+            ],
             transportation: [
-                { value: 'car_payments', label: 'Car Payments' },
-                { value: 'car_insurance', label: 'Car Insurance' },
-                { value: 'gas', label: 'Gas' },
+                { value: 'petrol', label: 'Petrol/Diesel' },
                 { value: 'public_transportation', label: 'Public Transportation Fares' },
                 { value: 'vehicle_maintenance', label: 'Vehicle Maintenance' }
             ],
@@ -43,11 +49,6 @@ const Home = () => {
                 { value: 'healthcare', label: 'Healthcare' },
                 { value: 'cell_phone', label: 'Cell Phone' },
                 { value: 'subscriptions', label: 'Subscriptions' }
-            ],
-            debt: [
-                { value: 'credit_card_payments', label: 'Credit Card Payments' },
-                { value: 'student_loans', label: 'Student Loan Payments' },
-                { value: 'other_loans', label: 'Other Loan Payments' }
             ],
             savings: [
                 { value: 'retirement_contributions', label: 'Retirement Contributions' },

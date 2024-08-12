@@ -67,10 +67,10 @@ const AddTransaction = ({
                 >
                     <option value="">Select Expense Type</option>
                     <option value="housing">Housing</option>
+                    <option value="emi">EMI</option>
                     <option value="transportation">Transportation</option>
                     <option value="food">Food</option>
                     <option value="personal">Personal</option>
-                    <option value="debt">Debt</option>
                     <option value="savings">Savings and Financial Goals</option>
                 </select>
             )}
