@@ -1,0 +1,99 @@
+/* Main container for the Home component */
+.main-budget{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+/* Common styles for all sections: budget, add transaction, and transactions */
+.budget-container, 
+.add-transaction-container, 
+.transaction-container {
+    width: 30%;
+    padding: 20px;
+    background-color: #e0f7fa;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Header styles for each section */
+h3 {
+    color: #00796b;
+    margin-bottom: 10px;
+}
+
+.total-amt{
+    text-align: center;
+    font-size: 2.1rem;
+}
+
+/* Input fields and select dropdowns */
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #ffffff;
+}
+
+input:focus-visible{
+    outline: none;
+}
+
+/* Buttons styling */
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #00796b;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for buttons */
+button:hover {
+    background-color: #004d40;
+}
+
+
+.transaction-expense {
+    color: red;
+}
+
+.transaction-income {
+    color: green;
+}
+
+
+.error-border {
+    border: 1px solid red;
+}
+
+
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .main-budget {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .budget-container, 
+    .add-transaction-container, 
+    .transaction-container {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}

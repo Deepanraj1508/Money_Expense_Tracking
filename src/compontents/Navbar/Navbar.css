@@ -1,0 +1,17 @@
+.navbar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+    border-radius: 50px;
+}
+
+.nav-logo{
+    width: 5%;
+    height: 5%;
+}
+
+.nav-title{
+    font-size: 2.1rem;
+    color: white;
+}
