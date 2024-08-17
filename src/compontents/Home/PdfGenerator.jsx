@@ -1,4 +1,3 @@
-// PdfGenerator.jsx
 import React from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -6,6 +5,11 @@ import 'jspdf-autotable';
 const PdfGenerator = ({ name, month, initialBudget, currentBudget, transactions }) => {
 
     const handleDownloadTransactions = () => {
+        if (transactions.length === 0) {
+            alert('No transactions available to download.');
+            return;
+        }
+
         const doc = new jsPDF();
 
         // Add title and details to the PDF
@@ -17,7 +21,7 @@ const PdfGenerator = ({ name, month, initialBudget, currentBudget, transactions 
         doc.text(`Initial Budget: ₹${initialBudget}`, 14, 40);
         doc.text(`Remaining Budget: ₹${currentBudget}`, 14, 45);
 
-        // Prepare transaction data for table
+        // Prepare transaction data for the table
         const headers = [["Date & Time", "Category", "Expense", "Income", "Balance"]];
         let runningBalance = initialBudget;
 
@@ -64,11 +68,17 @@ const PdfGenerator = ({ name, month, initialBudget, currentBudget, transactions 
         });
 
         // Save the PDF
-        doc.save(`transactions_${month}.pdf`);
+        doc.save(`${name}_transactions_${month}.pdf`);
     };
 
     return (
-        <button onClick={handleDownloadTransactions}>Download Transactions</button>
+        <>
+            {transactions.length > 0 && (
+                <button onClick={handleDownloadTransactions}>
+                    Download Transactions
+                </button>
+            )}
+        </>
     );
 };
 

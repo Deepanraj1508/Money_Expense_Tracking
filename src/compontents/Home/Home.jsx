@@ -25,7 +25,7 @@ const Home = () => {
                 { value: 'water', label: 'Water' },
                 { value: 'internet_cable', label: 'Internet and Cable/Streaming Services' }
             ],
-            emi:[
+            emi: [
                 { value: 'bike', label: 'Bike' },
                 { value: 'car', label: 'Car' },
                 { value: 'mobile', label: 'Mobile' },
@@ -54,6 +54,9 @@ const Home = () => {
                 { value: 'retirement_contributions', label: 'Retirement Contributions' },
                 { value: 'emergency_fund', label: 'Emergency Fund Savings' },
                 { value: 'other_savings', label: 'Other Savings Goals' }
+            ],
+            other:[
+                {value: 'other',label:'other'}
             ]
         };
         return subCategories[type] || [];
@@ -116,8 +119,14 @@ const Home = () => {
                         type="text"
                         placeholder="Enter Name"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            // Use a regular expression to remove numeric characters
+                            const filteredValue = value.replace(/[0-9]/g, '');
+                            setName(filteredValue);
+                        }}
                     />
+
                     <input
                         type="month"
                         value={month}
@@ -127,19 +136,19 @@ const Home = () => {
                         type="number"
                         placeholder="Set Budget"
                         value={initialBudget}
-                        onChange={(e) => setInitialBudget(e.target.value)}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if (value.length <= 10) {
+                                setInitialBudget(value);
+                            }
+                        }}
                     />
+
                     <button onClick={handleSetBudget}>Set Budget</button>
                     <button onClick={handleReset}>Reset</button>
-                    <PdfGenerator
-                        name={name}
-                        month={month}
-                        initialBudget={initialBudget}
-                        currentBudget={currentBudget}
-                        transactions={transactions}
-                    />
+                   
                 </div>
-                <AddTransaction 
+                <AddTransaction
                     transactionType={transactionType}
                     setTransactionType={setTransactionType}
                     expenseType={expenseType}
@@ -167,6 +176,13 @@ const Home = () => {
                             );
                         })}
                     </ul>
+                    <PdfGenerator
+                        name={name}
+                        month={month}
+                        initialBudget={initialBudget}
+                        currentBudget={currentBudget}
+                        transactions={transactions}
+                    />
                 </div>
             </div>
         </div>
