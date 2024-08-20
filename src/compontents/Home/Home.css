@@ -44,6 +44,13 @@ input{
     background-color: #ffffff;
 }
 
+label{
+    width: 100%;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 select {
     width: 105%;
     padding: 8px;
@@ -109,3 +116,24 @@ button:hover {
 }
 
 
+.total-amt {
+    font-family: Arial, sans-serif; /* Base font for the <h4> */
+    font-size: 1.5em;
+    color: #333; /* Base color for the <h4> */
+}
+
+.total-amt .name-style {
+    font-family: Verdana, sans-serif;
+    font-weight: 900;
+    font-size: 1.5em;
+    padding: 10px;
+    color: #00796b; /* Adjust if needed */
+}
+
+.total-amt .budget-style {
+    font-family: Verdana, sans-serif;
+    font-weight: 900;
+    font-size: 1.5em;
+    color: #00796b; /* Adjust if needed */
+    padding: 20px;
+}
