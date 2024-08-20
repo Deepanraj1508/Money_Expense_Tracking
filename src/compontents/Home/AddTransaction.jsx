@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
+import './Home.css'; // Assuming you will add the styles here
 
 const AddTransaction = ({
-    transactionType, setTransactionType,
-    expenseType, setExpenseType,
-    subCategory, setSubCategory,
-    transactionAmount, setTransactionAmount,
-    transactionName, setTransactionName,
-    handleAddTransaction, getSubCategories, disabled
+    transactionType,
+    setTransactionType,
+    expenseType,
+    setExpenseType,
+    subCategory,
+    setSubCategory,
+    transactionAmount,
+    setTransactionAmount,
+    transactionName,
+    setTransactionName,
+    handleAddTransaction,
+    getSubCategories,
+    disabled
 }) => {
     const [errors, setErrors] = useState({});
     const [otherExpenseDescription, setOtherExpenseDescription] = useState('');
 
     const validateFields = () => {
         const newErrors = {};
-        if (!transactionType) newErrors.transactionType = true;
-        if (transactionType === 'expense' && !expenseType) newErrors.expenseType = true;
-        if (transactionType === 'expense' && expenseType === 'other' && !otherExpenseDescription) newErrors.otherExpenseDescription = true;
-        if (!transactionAmount || isNaN(transactionAmount) || transactionAmount <= 0) newErrors.transactionAmount = true;
-        if (!transactionName || !/^[a-zA-Z\s]+$/.test(transactionName)) newErrors.transactionName = true;
+        if (!transactionType) newErrors.transactionType = 'Transaction type is required.';
+        if (transactionType === 'expense' && !expenseType) newErrors.expenseType = 'Expense type is required.';
+        if (transactionType === 'expense' && expenseType === 'other' && !otherExpenseDescription) newErrors.otherExpenseDescription = 'Description for "Other" expense is required.';
+        if (!transactionAmount || isNaN(transactionAmount) || transactionAmount <= 0) newErrors.transactionAmount = 'Valid transaction amount is required.';
+        if (!transactionName || !/^[a-zA-Z\s]+$/.test(transactionName)) newErrors.transactionName = 'Valid transaction name is required.';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -38,6 +46,14 @@ const AddTransaction = ({
         }
     };
 
+    const handleTransactionAmountChange = (e) => {
+        const value = e.target.value;
+        // Allow only digits and empty string
+        if (/^\d*$/.test(value)) {
+            setTransactionAmount(value);
+        }
+    };
+
     return (
         <div className="add-transaction-container">
             <h3>Add Transaction</h3>
@@ -53,11 +69,11 @@ const AddTransaction = ({
                     setOtherExpenseDescription('');
                 }}
             >
-                <option value="none">Select Transaction Type</option>
+                <option value="">Select Transaction Type</option>
                 <option value="expense">Expense</option>
                 <option value="income">Income</option>
             </select>
-            {errors.transactionType}
+            {errors.transactionType && <div className="error-message">{errors.transactionType}</div>}
 
             {transactionType === 'expense' && (
                 <select
@@ -81,7 +97,7 @@ const AddTransaction = ({
                     <option value="other">Other</option>
                 </select>
             )}
-            {errors.expenseType}
+            {errors.expenseType && <div className="error-message">{errors.expenseType}</div>}
 
             {expenseType && expenseType !== 'other' && (
                 <select
@@ -109,29 +125,27 @@ const AddTransaction = ({
                     onChange={(e) => setOtherExpenseDescription(e.target.value)}
                 />
             )}
-            {errors.otherExpenseDescription}
-
+            {errors.otherExpenseDescription && <div className="error-message">{errors.otherExpenseDescription}</div>}
+            <div className="currency-input-container">
+            <span className="currency-symbol">₹</span>
             <input
                 type="number"
                 placeholder="Transaction Amount"
+                onChange={handleTransactionAmountChange}
                 className={errors.transactionAmount ? 'error-border' : ''}
                 value={transactionAmount}
-                onChange={(e) => {
-                    const value = parseFloat(e.target.value);
-                    if (!isNaN(value) && value >= 0) {
-                        setTransactionAmount(value);
-                    }
-                }}
             />
-            {errors.transactionAmount}
+            </div>
+            {errors.transactionAmount && <div className="error-message">{errors.transactionAmount}</div>}
 
             <input
                 type="text"
                 placeholder="Transaction Name"
                 value={transactionName}
                 onChange={(e) => setTransactionName(e.target.value)}
+                className={errors.transactionName ? 'error-border' : ''}
             />
-            {errors.transactionName}
+            {errors.transactionName && <div className="error-message">{errors.transactionName}</div>}
 
             <button onClick={handleClick} disabled={disabled}>
                 Add Transaction

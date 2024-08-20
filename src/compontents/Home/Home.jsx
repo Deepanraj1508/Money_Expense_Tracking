@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PdfGenerator from './PdfGenerator';
 import AddTransaction from './AddTransaction';
+import Budget from './Budget';
 import './Home.css';
 import subCategories from './subCategories.json';
 
@@ -25,8 +26,6 @@ const Home = () => {
         setMonth(currentMonthYear);
     }, []);
 
-    const handleMonthChange = (e) => setMonth(e.target.value);
-
     // Helper function to retrieve subcategories based on expense type
     const getSubCategories = (type) => {
         return subCategories[type] || [];
@@ -38,20 +37,6 @@ const Home = () => {
         if (!isNaN(budget)) {
             setCurrentBudget(budget);
         }
-    };
-
-    // Event handler for resetting the form
-    const handleReset = () => {
-        setName('');
-        setMonth('');
-        setInitialBudget('');
-        setCurrentBudget(null);
-        setTransactions([]);
-        setTransactionType('');
-        setExpenseType('');
-        setTransactionAmount('');
-        setTransactionName('');
-        setSubCategory('');
     };
 
     // Event handler for adding a transaction
@@ -85,55 +70,23 @@ const Home = () => {
                 <div className="home-header">
                     {currentBudget !== null && (
                         <h4 className='total-amt'>
-                            <span className='name-style'>{name}</span> Total for this month is:
+                            <span className='name-style'>{name}</span> Total Amount for this month is:
                             <span className='budget-style'>₹{currentBudget}</span>
                         </h4>
                     )}
                 </div>
             </div>
             <div className='main-budget'>
-                <div className="budget-container">
-                    <h3>Budget</h3>
-                    <input
-                        type="text"
-                        placeholder="Enter Name"
-                        value={name}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            const filteredValue = value.replace(/[0-9]/g, '');
-                            setName(filteredValue);
-                        }}
-                    />
-
-                    <label>
-                        Enter Budget Month
-                    </label>
-                    <input
-                        type="month"
-                        value={month}
-                        onChange={handleMonthChange}
-                    />
-                    <input
-                        type="number"
-                        placeholder="Set Budget"
-                        value={initialBudget}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            if (value.length <= 10) {
-                                setInitialBudget(value);
-                            }
-                        }}
-                    />
-
-                    <button
-                        onClick={handleSetBudget}
-                        disabled={!name || !month || !initialBudget}
-                    >
-                        Set Budget
-                    </button>
-                    <button onClick={handleReset}>Reset</button>
-                </div>
-
+                <Budget
+                    name={name}
+                    month={month}
+                    initialBudget={initialBudget}
+                    currentBudget={currentBudget}
+                    handleSetBudget={handleSetBudget}
+                    setName={setName}
+                    setMonth={setMonth}
+                    setInitialBudget={setInitialBudget}
+                />
                 <AddTransaction
                     transactionType={transactionType}
                     setTransactionType={setTransactionType}
