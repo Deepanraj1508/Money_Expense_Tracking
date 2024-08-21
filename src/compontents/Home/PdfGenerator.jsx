@@ -5,7 +5,7 @@ import 'jspdf-autotable';
 const PdfGenerator = ({ name, month, initialBudget, currentBudget, transactions }) => {
 
     const handleDownloadTransactions = () => {
-        if (transactions.length === 0) {
+        if (transactions.length === 1) {
             alert('No transactions available to download.');
             return;
         }
@@ -73,7 +73,7 @@ const PdfGenerator = ({ name, month, initialBudget, currentBudget, transactions 
 
     return (
         <>
-            {transactions.length > 0 && (
+            {transactions.length > 1 && (
                 <button onClick={handleDownloadTransactions}>
                     Download Transactions
                 </button>

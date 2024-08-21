@@ -108,8 +108,10 @@ button:hover {
 .error-message{
     color: red;
     align-items: flex-start;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 400;
     margin-top: -10px;
+    width: 100%;
 }
 
 

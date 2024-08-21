@@ -15,7 +15,7 @@ const Budget = ({
     const validateInputs = () => {
         const newErrors = {
             name: name.trim().length < 2 ? 'Name must be at least 2 characters long' :
-                  name.trim().length > 50 ? 'Name cannot exceed 50 characters' :
+                  name.trim().length > 30 ? 'Name cannot exceed 30 characters' :
                   /^[0-9]+$/.test(name) ? 'Name should not contain numbers' : '',
             month: month === '' ? 'Month is required' : '',
             initialBudget: initialBudget.trim() === '' ? 'Initial Budget is required' :
@@ -52,14 +52,14 @@ const Budget = ({
                 
                 value={name}
                 minLength={2}
-                maxLength={50}
+                maxLength={40}
                 onChange={(e) => {
                     const value = e.target.value;
                     const filteredValue = value.replace(/[0-9]/g, '');
                     setName(filteredValue);
                     validateInputs(); // Validate on input change
                 }}
-                className={errors.name ? 'input-error' : ''}
+                className={errors.name ? 'error-border' : ''}
                 required
             />
             {errors.name && <p className="error-message">{errors.name}</p>}
@@ -71,7 +71,7 @@ const Budget = ({
                     setMonth(e.target.value);
                     validateInputs(); // Validate on input change
                 }}
-                className={errors.month ? 'input-error' : ''}
+                className={errors.month ? 'error-border' : ''}
                 required
             />
             {errors.month && <p className="error-message">{errors.month}</p>}
@@ -83,7 +83,7 @@ const Budget = ({
                     placeholder="Set Budget"
                     value={initialBudget}
                     onChange={handleInitialBudgetChange}
-                    className={errors.initialBudget ? 'input-error' : ''}
+                    className={errors.initialBudget ? 'error-border' : ''}
                     required
                 />
                
