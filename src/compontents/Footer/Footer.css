@@ -1,0 +1,31 @@
+.footer-main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: #000000;
+    height: 20vh;
+    border-radius: 20px;
+}
+
+.footer-logo-main{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-logo{
+    width: 35px;
+    height: 35px;
+}
+
+.footer-title{
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.footer-copyrights{
+    font-weight: normal;
+    color: #ffffff;
+    font-size: 14px;
+}

@@ -4,7 +4,7 @@
     justify-content: space-between;
     padding: 20px;
     background-color: #f4f4f4;
-    min-height: 100vh;
+    min-height: 70vh;
 }
 
 /* Common styles for all sections: budget, add transaction, and transactions */
