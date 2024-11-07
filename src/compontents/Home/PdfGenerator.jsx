@@ -1,84 +1,110 @@
 import React from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import logo from '../../assets/logo.png'
 
 const PdfGenerator = ({ name, month, initialBudget, currentBudget, transactions }) => {
 
-    const handleDownloadTransactions = () => {
-        if (transactions.length === 1) {
-            alert('No transactions available to download.');
-            return;
-        }
+    const generatePDF = () => {
+        try {
+            const doc = new jsPDF();
 
-        const doc = new jsPDF();
+            const logoUrl = logo; 
+            doc.addImage(logoUrl, 'PNG', 14, 10, 30, 30);
 
-        // Add title and details to the PDF
-        doc.setFontSize(18);
-        doc.text("Transaction Statement", 14, 20);
-        doc.setFontSize(12);
-        doc.text(`Name: ${name}`, 14, 30);
-        doc.text(`Month: ${month}`, 14, 35);
-        doc.text(`Initial Budget: ₹${initialBudget}`, 14, 40);
-        doc.text(`Remaining Budget: ₹${currentBudget}`, 14, 45);
+            doc.setFontSize(22);
+            doc.setFont("helvetica", "bold");
+            doc.text("Transaction Statement", 14, 50);
+            doc.setFontSize(18);
+            doc.setFont("times", "normal");
+            doc.text(`Name: ${name}`, 14, 60);
+            doc.text(`Month: ${new Date().toLocaleString()}`, 14, 68);   
+            doc.setFontSize(14);
+            doc.setTextColor(0, 102, 204);
+            doc.setFont("times", "bold");
+            doc.text(`Initial Amout: ${initialBudget}`, 14, 75);
+            doc.setFontSize(14);
+            doc.setTextColor('#15ab1f');
+            doc.text(`Remaining Amout: ${currentBudget}`, 14, 80);
 
-        // Prepare transaction data for the table
-        const headers = [["Date & Time", "Category", "Expense", "Income", "Balance"]];
-        let runningBalance = initialBudget;
 
-        const rows = transactions.map(t => {
-            const dateTime = new Date().toLocaleString(); // For demonstration, replace with actual transaction datetime
-            const isExpense = t.type === 'expense';
-            const amount = t.amount;
-            const expense = isExpense ? `₹${amount}` : "-";
-            const income = !isExpense ? `₹${amount}` : "-";
+            const headers = [["Date", "Category", "Expense", "Income", "Balance"]];
+            let runningBalance = Number(initialBudget);
 
-            runningBalance = isExpense ? runningBalance - amount : runningBalance + amount;
+const rows = transactions.map((t) => {
+    // const dateTime = {month};
+    const isExpense = t.type === 'expense';
+    const amount = Number(t.amount);
+    const expense = isExpense ? ` ${amount.toLocaleString("en-IN")}` : "-";
+    const income = !isExpense ? ` ${amount.toLocaleString("en-IN")}` : "-";
 
-            return [
-                dateTime,
-                t.expenseType,
-                expense,
-                income,
-                `₹${runningBalance}`
-            ];
-        });
+    runningBalance = isExpense ? runningBalance - amount : runningBalance + amount;
+    const formattedBalance = ` ${runningBalance.toLocaleString("en-IN")}`;
 
-        // Generate table in PDF
-        doc.autoTable({
-            head: headers,
-            body: rows,
-            startY: 55,
-            theme: 'striped',
-            styles: {
-                cellPadding: 4,
-                fontSize: 10,
-            },
-            columnStyles: {
-                2: {
-                    cellStyles: {
-                        textColor: [255, 0, 0] // Red color for Expense
-                    }
+    return [
+        month,
+        t.expenseType,
+        expense,
+        income,
+        formattedBalance,
+    ];
+});
+
+            doc.autoTable({
+                head: headers,
+                body: rows,
+                startY: 90,
+                theme: 'grid',
+                styles: {
+                    font: "times",
+                    fontSize: 11,
+                    textColor: [0, 0, 0],
+                    cellPadding: 2,
+                    fillColor: [245, 245, 245],
                 },
-                3: {
-                    cellStyles: {
-                        textColor: [0, 255, 0] // Green color for Income
-                    }
+                headStyles: {
+                    fillColor: [0, 102, 204],
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold',
+                },
+                columnStyles: {
+                    2: { textColor: [255, 0, 0] },  // Red for Expense
+                    3: { textColor: [0, 128, 0] },  // Green for Income
                 }
-            }
-        });
+            });
 
-        // Save the PDF
-        doc.save(`${name}_transactions_${month}.pdf`);
+            return doc;
+        } catch (error) {
+            console.error("Error generating PDF:", error);
+            alert("An error occurred while generating the PDF.");
+            return null;
+        }
+    };
+
+    const handleDownloadTransactions = () => {
+        const doc = generatePDF();
+        if (doc) {
+            doc.save(`${name}_transactions_${month}.pdf`);
+        }
+    };
+
+    const handlePreviewTransactions = () => {
+        const doc = generatePDF();
+        if (doc) {
+            const pdfUrl = doc.output('bloburl');
+            window.open(pdfUrl, '_blank');
+        }
     };
 
     return (
-        <>
-            {transactions.length > 1 && (
-                <button onClick={handleDownloadTransactions}>
-                    Download Transactions
-                </button>
-            )}
-        </>
+        <div>
+            <button onClick={handlePreviewTransactions}>
+                Preview Transactions
+            </button>
+            <button onClick={handleDownloadTransactions}>
+                Download Transactions
+            </button>
+        </div>
     );
 };
 
